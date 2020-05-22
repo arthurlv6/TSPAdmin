@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using TSP.Client.Services;
+using TSP.Client.Components;
 
 namespace TSP.Client
 {
@@ -29,6 +30,7 @@ namespace TSP.Client
             builder.Services.AddScoped<SubSystemService>();
             builder.Services.AddScoped<SubMenuItemService>();
             builder.Services.AddScoped<SubItemDetailService>();
+            builder.Services.AddScoped<GlobalMessage>();
 
             await builder.Build().RunAsync();
         }

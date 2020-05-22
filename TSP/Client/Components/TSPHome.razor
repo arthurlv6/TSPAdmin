@@ -1,5 +1,67 @@
-﻿<h3>TSPHome</h3>
+﻿@inherits TSPHomeBase
+<h3>TSPHome</h3>
+@if (PageDataModel == null)
+{
+    <p><em>Loading...</em></p> }
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <div class="btn-group mb-3">
+                <input type="text" class="form-control"
+                       @bind="nameFilter"
+                       placeholder="Filter by name" />
+                <button type="button" class="btn btn-primary mb-2"
+                        @onclick="Filter">
+                    Search
+                </button>
+                <button type="button" class="btn btn-primary mb-2"
+                        @onclick="Clear">
+                    Clear
+                </button>
+            </div>
+        </div>
+    </div>
+    <GenericList Elements="PageDataModel.Data">
+        <NullTemplate>
+            <p><em>Loading...</em></p>
+        </NullTemplate>
+        <WithElementsTemplate>
+            <table class="table table-sm tab-content table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
 
-@code {
-
-}
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Paragraph
+                        </th>
+                        <th>
+                            Image
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in PageDataModel.Data)
+                    {
+                        <SubItemDetailLine @key="item" Item="item"></SubItemDetailLine>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="5" style="padding-left:0px;">
+                            <Pagination TotaPagesQuantity="PageDataModel.PageQuantity" CurrentPage="currentPage" Radius="3"
+                                        SelectedPage="SelectedPage"></Pagination>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </WithElementsTemplate>
+    </GenericList>}

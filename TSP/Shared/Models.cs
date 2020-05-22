@@ -54,5 +54,6 @@ namespace TSP.Shared
         public string Paragraph { get; set; }
         public string Image { get; set; }
         public SubMenuItemModel SubMenuItem { get; set; }
+        public bool IsShowDetail { get; set; }
     }
 }
