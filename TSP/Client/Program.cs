@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using TSP.Client.Services;
 
 namespace TSP.Client
 {
@@ -25,6 +26,9 @@ namespace TSP.Client
             builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("TSP.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+            builder.Services.AddScoped<SubSystemService>();
+            builder.Services.AddScoped<SubMenuItemService>();
+            builder.Services.AddScoped<SubItemDetailService>();
 
             await builder.Build().RunAsync();
         }

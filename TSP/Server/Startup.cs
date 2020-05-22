@@ -13,6 +13,10 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using TSP.Server.Data;
 using TSP.Server.Models;
+using TSP.Server.Mapper;
+using AutoMapper;
+using System.Reflection;
+using TSP.Server.Repos;
 
 namespace TSP.Server
 {
@@ -38,6 +42,11 @@ namespace TSP.Server
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+
+            services.AddAutoMapper(typeof(ModelProfile).GetTypeInfo().Assembly);
+            services.AddScoped<SubSystemRepo>();
+            services.AddScoped<SubMenuItemRepo>();
+            services.AddScoped<SubItemDetailRepo>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

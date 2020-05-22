@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.128
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP.Server", "TSP\Server\TSP.Server.csproj", "{E1169FCD-66DA-4042-818F-F5C8655B050A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP.Server", "TSP\Server\TSP.Server.csproj", "{E1169FCD-66DA-4042-818F-F5C8655B050A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP.Client", "TSP\Client\TSP.Client.csproj", "{BA08F204-1DE9-43F3-9677-739604D5F634}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP.Client", "TSP\Client\TSP.Client.csproj", "{BA08F204-1DE9-43F3-9677-739604D5F634}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP.Shared", "TSP\Shared\TSP.Shared.csproj", "{252B6015-F771-4CA2-9308-C49617CE1AF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP.Shared", "TSP\Shared\TSP.Shared.csproj", "{252B6015-F771-4CA2-9308-C49617CE1AF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

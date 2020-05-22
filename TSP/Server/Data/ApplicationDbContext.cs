@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TSP.Shared;
 
 namespace TSP.Server.Data
 {
@@ -17,5 +18,8 @@ namespace TSP.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public virtual DbSet<SubSystem> SubSystems { get; set; }
+        public virtual DbSet<SubMenuItem> SubMenuItems { get; set; }
+        public virtual DbSet<SubItemDetail> SubItemDetails { get; set; }
     }
 }
