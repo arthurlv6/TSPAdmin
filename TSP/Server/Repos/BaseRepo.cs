@@ -27,6 +27,5 @@ namespace TSP.Server.Repos
                 .Take(size)
                 .Select(d => d.ToModel<M>(mapper));
         }
-        
     }
 }

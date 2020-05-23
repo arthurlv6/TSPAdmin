@@ -16,5 +16,22 @@ namespace TSP.Client.Services
         {
             _httpClient = httpClient;
         }
+        public async Task<IList<M>> GetAll<M>(int subSystemId, string token = null) where M : BaseModel
+        {
+            try
+            {
+                if (!httpClient.DefaultRequestHeaders.Contains("Authorization") && !string.IsNullOrEmpty(token))
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+
+                string url = @"api/submenuitem/"+subSystemId;
+                var data = await httpClient.GetStreamAsync(url);
+                return await JsonSerializer.DeserializeAsync<IList<M>>
+                    (data, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

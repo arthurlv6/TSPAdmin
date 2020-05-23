@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TSP.Server.Repos;
 using TSP.Shared;
+using System.Threading.Tasks;
 
 namespace TSP.Server.Controllers
 {
@@ -17,7 +18,15 @@ namespace TSP.Server.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(repo.GetAll<SubMenuItem, SubMenuItemModel>());
+            var temp = repo.GetAll<SubMenuItem, SubMenuItemModel>();
+            return Ok(temp);
+        }
+
+        [HttpGet("{subSystemId}")]
+        public async Task<IActionResult> GetAll(int subSystemId = 1)
+        {
+            var temp = await repo.GetAll<SubMenuItemModel>(subSystemId);
+            return Ok(temp);
         }
     }
 }

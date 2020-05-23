@@ -1,8 +1,9 @@
-﻿@inherits TSPHomeBase
+﻿@inherits SubSystemItemBase
 <h3>TSPHome</h3>
 @if (PageDataModel == null)
 {
-    <p><em>Loading...</em></p> }
+    <p><em>Loading...</em></p> 
+}
 else
 {
     <div class="row">
@@ -33,15 +34,8 @@ else
                         <th>
                             Name
                         </th>
-
                         <th>
                             Title
-                        </th>
-                        <th>
-                            Paragraph
-                        </th>
-                        <th>
-                            Image
                         </th>
                         <th>
                             Action
@@ -64,4 +58,5 @@ else
                 </tfoot>
             </table>
         </WithElementsTemplate>
-    </GenericList>}
+    </GenericList>
+    }

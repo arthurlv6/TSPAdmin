@@ -39,12 +39,16 @@ namespace TSP.Shared
     }
     public class SubSystemModel:BaseModel
     {
-
+        public int Order { get; set; }
     }
     public class SubMenuItemModel : BaseModel
     {
         public SubSystem SubSystem { get; set; }
         public int SubSystemId { get; set; }
+        public int Order { get; set; }
+        public string TabHeader { get; set; }
+        public string TabDetail { get; set; }
+        public string TabHeaderSelect { get; set; }
         public IList<SubItemDetailModel> SubItemDetails { get; set; }
     }
     public class SubItemDetailModel : BaseModel
@@ -53,6 +57,7 @@ namespace TSP.Shared
         public string Title { get; set; }
         public string Paragraph { get; set; }
         public string Image { get; set; }
+        public int Order { get; set; }
         public SubMenuItemModel SubMenuItem { get; set; }
         public bool IsShowDetail { get; set; }
     }

@@ -20,6 +20,7 @@ namespace TSP.Shared
     {
         public IList<SubMenuItem> SubMenuItems { get; set; }
         // tsp, revlution, greenhaven and staff
+        public int Order { get; set; }
     }
     public class SubMenuItem : BaseEntity
     {
@@ -27,6 +28,7 @@ namespace TSP.Shared
         public int SubSystemId { get; set; }
         public IList<SubItemDetail> SubItemDetails { get; set; }
         // for tsp we have home, team, gallery, about us and current project
+        public int Order { get; set; }
     }
     public class SubItemDetail : BaseEntity
     {
@@ -34,6 +36,7 @@ namespace TSP.Shared
         public string Title { get; set; }
         public string Paragraph { get; set; }
         public string Image { get; set; }
+        public int Order { get; set; }
         public SubMenuItem SubMenuItem { get; set; }
     }
 }

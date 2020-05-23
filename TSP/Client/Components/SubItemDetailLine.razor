@@ -8,9 +8,6 @@
         @Item.Title
     </td>
     <td>
-        @Item.Paragraph
-    </td>
-    <td>
         <button class="btn btn-outline-primary btn-sm" @onclick="@(() => ShowDetail(Item))">
             Detail
         </button>
@@ -19,11 +16,13 @@
 @if (Item.IsShowDetail)
 {
     <tr>
-        <td colspan="4">
-            <div style="margin:5px;">
-                <div class="row">
+        <td colspan="3">
+            <div class="d-flex flex-column p-3">
+                <div>
+                    @Item.Paragraph
                 </div>
-                <div class="row d-flex flex-wrap align-items-start">
+                <div>
+                    @Item.Image
                 </div>
             </div>
         </td>
