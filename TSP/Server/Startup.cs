@@ -17,6 +17,7 @@ using TSP.Server.Mapper;
 using AutoMapper;
 using System.Reflection;
 using TSP.Server.Repos;
+using System;
 
 namespace TSP.Server
 {
@@ -33,6 +34,15 @@ namespace TSP.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetPreflightMaxAge(TimeSpan.FromSeconds(300)));
+            });
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -53,6 +63,20 @@ namespace TSP.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMvc().AddNewtonsoftJson();
+            services.AddResponseCompression(opts =>
+            {
+                opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+                    new[] { "application/octet-stream" });
+            });
+            services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("store-v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Store",
+                    Version = "1.0.1"
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +110,11 @@ namespace TSP.Server
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
+            });
+            app.UseSwagger();
+            app.UseSwaggerUI(options =>
+            {
+                options.SwaggerEndpoint("/swagger/store-v1/swagger.json", "store");
             });
         }
     }

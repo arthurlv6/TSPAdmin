@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace TSP.Server.Repos
 {
@@ -26,6 +27,29 @@ namespace TSP.Server.Repos
                 .Skip((page -1)*size)
                 .Take(size)
                 .Select(d => d.ToModel<M>(mapper));
+        }
+        public async Task<M> GetOneAsync<T,M>(int id) where T : BaseEntity where M : BaseModel
+        {
+            var requirement = await dBContext.Set<T>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Id == id);
+            if (requirement != null)
+                return requirement.ToModel<M>(mapper);
+            else
+                return null;
+        }
+        public async Task UpdateAsync<T, M>(M m) where T : BaseEntity where M : BaseModel
+        {
+            try
+            {
+                var entity = dBContext.Set<T>().First(d => d.Id == m.Id);
+                mapper.Map(m, entity);
+                await dBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

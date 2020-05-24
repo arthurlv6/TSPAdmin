@@ -37,6 +37,7 @@ namespace TSP.Shared
         public string Paragraph { get; set; }
         public string Image { get; set; }
         public int Order { get; set; }
+        public bool Available { get; set; }
         public SubMenuItem SubMenuItem { get; set; }
     }
 }

@@ -13,9 +13,9 @@ namespace TSP.Server
         {
             context.Database.EnsureCreated();
 
-            var tsp = new SubSystem { Name = "TSP Construction" };
-            var green = new SubSystem { Name = "Green Haven Home" };
-            var rev = new SubSystem { Name = "Revlution" };
+            var tsp = new SubSystem { Name = "TSP Construction", Order=1 };
+            var green = new SubSystem { Name = "Green Haven Home", Order=2 };
+            var rev = new SubSystem { Name = "Revlution", Order=3 };
 
             if (!context.SubSystems.Any())
             {
@@ -23,11 +23,11 @@ namespace TSP.Server
                 context.SubSystems.Add(green);
                 context.SubSystems.Add(rev);
             }
-            var tspHome = new SubMenuItem() { Name="Home", SubSystem=tsp };
-            var tspTeam = new SubMenuItem() { Name = "Our Team", SubSystem = tsp };
-            var tspGallery = new SubMenuItem() { Name = "Gallery", SubSystem = tsp };
-            var tspUs = new SubMenuItem() { Name = "About us", SubSystem = tsp };
-            var tspProject = new SubMenuItem() { Name = "Current Project", SubSystem = tsp };
+            var tspHome = new SubMenuItem() { Name="Home", SubSystem=tsp, Order=1 };
+            var tspTeam = new SubMenuItem() { Name = "Our Team", SubSystem = tsp, Order=2 };
+            var tspGallery = new SubMenuItem() { Name = "Gallery", SubSystem = tsp , Order=3};
+            var tspUs = new SubMenuItem() { Name = "About us", SubSystem = tsp, Order=4};
+            var tspProject = new SubMenuItem() { Name = "Current Project", SubSystem = tsp, Order=5 };
 
             if (!context.SubMenuItems.Any())
             {
@@ -44,21 +44,24 @@ namespace TSP.Server
                     Title= "COMMERCIAL",
                     Paragraph= "Building from start to finish" ,
                     Image= "http://www.tspconstruction.co.nz/images/Commercial-homeimage.jpg",
-                    SubMenuItem=tspHome
+                    SubMenuItem=tspHome,
+                    Order=1
                 });
                 context.SubItemDetails.Add(new SubItemDetail()
                 {
                     Title = "RESIDENTIAL",
                     Paragraph = "Stunning homes built with pride",
                     Image = "http://www.tspconstruction.co.nz/images/Residential-homeimage.jpg",
-                    SubMenuItem = tspHome
+                    SubMenuItem = tspHome,
+                    Order=2
                 });
                 context.SubItemDetails.Add(new SubItemDetail()
                 {
                     Title = "Others",
-                    Paragraph = "Building from start to finish",
+                    Paragraph = "Something",
                     Image = "http://www.tspconstruction.co.nz/images/Commercial-homeimage.jpg",
-                    SubMenuItem = tspHome
+                    SubMenuItem = tspHome,
+                    Order=3
                 });
             }
             context.SaveChanges();

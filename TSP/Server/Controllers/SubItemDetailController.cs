@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.JsonPatch;
 using System.Threading.Tasks;
 using TSP.Server.Repos;
 using TSP.Shared;
@@ -23,6 +24,24 @@ namespace TSP.Server.Controllers
             var temp = await repo.GetPageData<SubItemDetailModel>(submenuItemId,page, size, keyword);
             HttpContext.InsertPaginationParameterInResponse(temp.Item2);
             return Ok(temp.Item1);
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartiallyUpdate(int id, [FromBody] JsonPatchDocument<SubItemDetailModel> model)
+        {
+            if (id == 0)
+                return BadRequest();
+
+            var record = await repo.GetOneAsync<SubItemDetail,SubItemDetailModel>(id);
+            if (record == null)
+                return NotFound();
+
+            model.ApplyTo(record, ModelState);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            await repo.UpdateAsync<SubItemDetail, SubItemDetailModel>(record);
+            return NoContent();
         }
     }
 }

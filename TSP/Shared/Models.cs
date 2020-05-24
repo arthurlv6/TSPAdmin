@@ -19,13 +19,9 @@ namespace TSP.Shared
     }
     public enum PatchUpdateItem
     {
-        Name,
-        Style,
-        Color,
-        Size,
-        Price,
-        Quatity,
-        Description
+        Title,
+        Paragraph,
+        Image
     }
     public class PaginationModel
     {
@@ -58,6 +54,7 @@ namespace TSP.Shared
         public string Paragraph { get; set; }
         public string Image { get; set; }
         public int Order { get; set; }
+        public bool Available { get; set; }
         public SubMenuItemModel SubMenuItem { get; set; }
         public bool IsShowDetail { get; set; }
     }

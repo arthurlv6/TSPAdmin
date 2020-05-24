@@ -26,5 +26,22 @@ namespace TSP.Client.Components
         {
             Item.IsShowDetail = !Item.IsShowDetail;
         }
+        protected async Task Change(ChangeEventArgs e, PatchUpdateItem patchUpdateItem)
+        {
+            var val = e.Value.ToString();
+            PatchUpdate[] patchUpdates = new PatchUpdate[1];
+            if (patchUpdateItem == PatchUpdateItem.Title)
+            {
+                patchUpdates[0] = new PatchUpdate { op = "replace", path = "Title", value = val };
+                Item.Title = val;
+            }
+            if (patchUpdateItem == PatchUpdateItem.Paragraph)
+            {
+                patchUpdates[0] = new PatchUpdate { op = "replace", path = "Paragraph", value = val };
+            }
+            var isDone = await Service.UpdateAsync(Item.Id, val, patchUpdates);
+            if (!isDone)
+                GlobalMsg.SetMessage("Failed to change the name");
+        }
     }
 }
