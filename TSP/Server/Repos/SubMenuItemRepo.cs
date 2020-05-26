@@ -20,6 +20,7 @@ namespace TSP.Server.Repos
         {
             return await dBContext.Set<SubMenuItem>()
                 .Where(d => d.SubSystemId==subSystemId)
+                .OrderBy(d=>d.Order)
                 .Select(d => d.ToModel<M>(mapper))
                 .ToListAsync();
         }

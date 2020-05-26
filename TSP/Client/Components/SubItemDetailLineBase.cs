@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,28 @@ namespace TSP.Client.Components
         public SubItemDetailModel Item { get; set; }
         [Inject]
         protected SubItemDetailService Service { get; set; }
-        protected override void OnInitialized()
+        [Inject]
+        IJSRuntime JSRuntime { get; set; }
+
+
+
+
+        protected async Task ShowDetail(SubItemDetailModel model)
         {
-            //foreach (var item in Item.ProductLinks)
-            //{
-            //    if (!item.Address.Contains("http"))
-            //        item.Address = "https://neartonztesting.oss-ap-southeast-2.aliyuncs.com/" + item.Address;
-            //}
+            if (model.IsShowClass == "d-block")
+            {
+                Item.IsShowClass = "d-none";
+            }
+            else
+            {
+                Item.IsShowClass = "d-block";
+                await JSRuntime.InvokeVoidAsync("blazorInterop.initializeSummernote",model.Id,model.Paragraph);
+            }
         }
-        protected void ShowDetail(SubItemDetailModel model)
+        protected async Task SaveChanges(int id)
         {
-            Item.IsShowDetail = !Item.IsShowDetail;
+            string paragraph = await JSRuntime.InvokeAsync<string>("blazorInterop.initializeSummernoteGet",id);
+            await Change( new ChangeEventArgs() { Value=paragraph },PatchUpdateItem.Paragraph);
         }
         protected async Task Change(ChangeEventArgs e, PatchUpdateItem patchUpdateItem)
         {
@@ -43,5 +55,6 @@ namespace TSP.Client.Components
             if (!isDone)
                 GlobalMsg.SetMessage("Failed to change the name");
         }
+        
     }
 }

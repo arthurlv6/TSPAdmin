@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TSP.Server.Data.Migrations
+namespace TSP.Server.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class _0 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,6 +78,20 @@ namespace TSP.Server.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubSystems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    Order = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubSystems", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -186,6 +200,52 @@ namespace TSP.Server.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "SubMenuItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    SubSystemId = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubMenuItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubMenuItems_SubSystems_SubSystemId",
+                        column: x => x.SubSystemId,
+                        principalTable: "SubSystems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubItemDetails",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    SubMenuItemId = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    Paragraph = table.Column<string>(nullable: true),
+                    Image = table.Column<string>(nullable: true),
+                    Order = table.Column<int>(nullable: false),
+                    Disabled = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubItemDetails", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubItemDetails_SubMenuItems_SubMenuItemId",
+                        column: x => x.SubMenuItemId,
+                        principalTable: "SubMenuItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -245,6 +305,16 @@ namespace TSP.Server.Data.Migrations
                 name: "IX_PersistedGrants_SubjectId_ClientId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "ClientId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubItemDetails_SubMenuItemId",
+                table: "SubItemDetails",
+                column: "SubMenuItemId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubMenuItems_SubSystemId",
+                table: "SubMenuItems",
+                column: "SubSystemId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -271,10 +341,19 @@ namespace TSP.Server.Data.Migrations
                 name: "PersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "SubItemDetails");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "SubMenuItems");
+
+            migrationBuilder.DropTable(
+                name: "SubSystems");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,20 +19,22 @@ namespace TSP.Client.Pages
         public int SubSystemId { get; set; }
         [Inject]
         SubMenuItemService Service { get; set; }
+        [Inject]
+        protected IJSRuntime JSRuntime { get; set; }
         public IList<SubMenuItemModel> TabsModel { get; set; }
-        protected override async Task OnInitializedAsync()
+        //protected override async Task OnInitializedAsync()
+        //{
+        //    var tokenResult = await AuthenticationService.RequestAccessToken();
+        //    tokenResult.TryGetToken(out var tokenReference);
+        //    Token = tokenReference.Value;
+        //    GlobalMsg.SetMessage();
+        //    await LoadTabs();
+        //}
+        protected override async Task OnParametersSetAsync()
         {
-            var tokenResult = await AuthenticationService.RequestAccessToken();
-            tokenResult.TryGetToken(out var tokenReference);
-            Token = tokenReference.Value;
-            GlobalMsg.SetMessage();
             await LoadTabs();
         }
-        //protected override async Task OnParametersSetAsync()
-        //{
-        //    SubSystemId = SubSystemId ?? "1";
-            
-        //}
+
         async Task LoadTabs()
         {
             try
@@ -72,5 +75,6 @@ namespace TSP.Client.Pages
                 }
             }
         }
+        
     }
 }
