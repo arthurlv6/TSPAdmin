@@ -1,0 +1,232 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "resources": [
+    {
+      "type": "Microsoft.Resources/resourceGroups",
+      "name": "TSPAdmin",
+      "location": "australiaeast",
+      "apiVersion": "2019-10-01"
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "name": "[concat('TSPAdminDeployment', uniqueString(subscription().subscriptionId))]",
+      "resourceGroup": "TSPAdmin",
+      "apiVersion": "2019-10-01",
+      "dependsOn": [
+        "TSPAdmin"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "resources": [
+            {
+              "id": "/subscriptions/f0708dcb-74c4-41ca-8031-d4c98e01d9da/resourceGroups/TSPAdmin/providers/Microsoft.Web/sites/TSPAdmin",
+              "name": "TSPAdmin",
+              "type": "Microsoft.Web/sites",
+              "kind": "app",
+              "location": "Australia East",
+              "tags": {
+                "hidden-related:/subscriptions/f0708dcb-74c4-41ca-8031-d4c98e01d9da/resourceGroups/TSPAdmin/providers/Microsoft.Web/serverfarms/TSPServerPlan": "empty"
+              },
+              "properties": {
+                "name": "TSPAdmin",
+                "state": "Running",
+                "hostNames": [
+                  "tspadmin.azurewebsites.net"
+                ],
+                "webSpace": "TSPAdmin-AustraliaEastwebspace",
+                "selfLink": "https://waws-prod-sy3-035.api.azurewebsites.windows.net:454/subscriptions/f0708dcb-74c4-41ca-8031-d4c98e01d9da/webspaces/TSPAdmin-AustraliaEastwebspace/sites/TSPAdmin",
+                "repositorySiteName": "TSPAdmin",
+                "owner": null,
+                "usageState": 0,
+                "enabled": true,
+                "adminEnabled": true,
+                "enabledHostNames": [
+                  "tspadmin.azurewebsites.net",
+                  "tspadmin.scm.azurewebsites.net"
+                ],
+                "siteProperties": {
+                  "metadata": null,
+                  "properties": [
+                    {
+                      "name": "LinuxFxVersion",
+                      "value": ""
+                    },
+                    {
+                      "name": "WindowsFxVersion",
+                      "value": null
+                    }
+                  ],
+                  "appSettings": null
+                },
+                "availabilityState": 0,
+                "sslCertificates": null,
+                "csrs": [],
+                "cers": null,
+                "siteMode": null,
+                "hostNameSslStates": [
+                  {
+                    "name": "tspadmin.azurewebsites.net",
+                    "sslState": 0,
+                    "ipBasedSslResult": null,
+                    "virtualIP": null,
+                    "thumbprint": null,
+                    "toUpdate": null,
+                    "toUpdateIpBasedSsl": null,
+                    "ipBasedSslState": 0,
+                    "hostType": 0
+                  },
+                  {
+                    "name": "tspadmin.scm.azurewebsites.net",
+                    "sslState": 0,
+                    "ipBasedSslResult": null,
+                    "virtualIP": null,
+                    "thumbprint": null,
+                    "toUpdate": null,
+                    "toUpdateIpBasedSsl": null,
+                    "ipBasedSslState": 0,
+                    "hostType": 1
+                  }
+                ],
+                "computeMode": null,
+                "serverFarm": null,
+                "serverFarmId": "/subscriptions/f0708dcb-74c4-41ca-8031-d4c98e01d9da/resourceGroups/TSPAdmin/providers/Microsoft.Web/serverfarms/TSPServerPlan",
+                "reserved": false,
+                "isXenon": false,
+                "hyperV": false,
+                "lastModifiedTimeUtc": "2020-06-03T16:27:22.66",
+                "storageRecoveryDefaultState": "Running",
+                "contentAvailabilityState": 0,
+                "runtimeAvailabilityState": 0,
+                "siteConfig": {
+                  "numberOfWorkers": null,
+                  "defaultDocuments": null,
+                  "netFrameworkVersion": null,
+                  "phpVersion": null,
+                  "pythonVersion": null,
+                  "nodeVersion": null,
+                  "powerShellVersion": null,
+                  "linuxFxVersion": null,
+                  "windowsFxVersion": null,
+                  "requestTracingEnabled": null,
+                  "remoteDebuggingEnabled": null,
+                  "remoteDebuggingVersion": null,
+                  "httpLoggingEnabled": null,
+                  "azureMonitorLogCategories": null,
+                  "acrUseManagedIdentityCreds": false,
+                  "acrUserManagedIdentityID": null,
+                  "logsDirectorySizeLimit": null,
+                  "detailedErrorLoggingEnabled": null,
+                  "publishingUsername": null,
+                  "publishingPassword": null,
+                  "appSettings": null,
+                  "metadata": null,
+                  "connectionStrings": null,
+                  "machineKey": null,
+                  "handlerMappings": null,
+                  "documentRoot": null,
+                  "scmType": null,
+                  "use32BitWorkerProcess": null,
+                  "webSocketsEnabled": null,
+                  "alwaysOn": null,
+                  "javaVersion": null,
+                  "javaContainer": null,
+                  "javaContainerVersion": null,
+                  "appCommandLine": null,
+                  "managedPipelineMode": null,
+                  "virtualApplications": null,
+                  "winAuthAdminState": null,
+                  "winAuthTenantState": null,
+                  "customAppPoolIdentityAdminState": null,
+                  "customAppPoolIdentityTenantState": null,
+                  "runtimeADUser": null,
+                  "runtimeADUserPassword": null,
+                  "loadBalancing": null,
+                  "routingRules": null,
+                  "experiments": null,
+                  "limits": null,
+                  "autoHealEnabled": null,
+                  "autoHealRules": null,
+                  "tracingOptions": null,
+                  "vnetName": null,
+                  "cors": null,
+                  "push": null,
+                  "apiDefinition": null,
+                  "apiManagementConfig": null,
+                  "autoSwapSlotName": null,
+                  "localMySqlEnabled": null,
+                  "managedServiceIdentityId": null,
+                  "xManagedServiceIdentityId": null,
+                  "ipSecurityRestrictions": null,
+                  "scmIpSecurityRestrictions": null,
+                  "scmIpSecurityRestrictionsUseMain": null,
+                  "http20Enabled": null,
+                  "minTlsVersion": null,
+                  "ftpsState": null,
+                  "preWarmedInstanceCount": null,
+                  "healthCheckPath": null,
+                  "fileChangeAuditEnabled": null,
+                  "functionsRuntimeScaleMonitoringEnabled": null,
+                  "websiteTimeZone": null,
+                  "minimumElasticInstanceCount": 0
+                },
+                "deploymentId": "TSPAdmin",
+                "trafficManagerHostNames": null,
+                "sku": "Standard",
+                "scmSiteAlsoStopped": false,
+                "targetSwapSlot": null,
+                "hostingEnvironment": null,
+                "hostingEnvironmentProfile": null,
+                "clientAffinityEnabled": true,
+                "clientCertEnabled": false,
+                "clientCertMode": 0,
+                "clientCertExclusionPaths": null,
+                "hostNamesDisabled": false,
+                "domainVerificationIdentifiers": null,
+                "customDomainVerificationId": "6D8BC8154CBA0D3556305A8EAA02B7196CDC076E29468D921CA29CB94DC4D078",
+                "kind": "app",
+                "inboundIpAddress": "13.70.72.32",
+                "possibleInboundIpAddresses": "13.70.72.32",
+                "ftpUsername": "TSPAdmin\\$TSPAdmin",
+                "ftpsHostName": "ftps://waws-prod-sy3-035.ftp.azurewebsites.windows.net/site/wwwroot",
+                "outboundIpAddresses": "13.70.72.32,40.126.227.28,40.126.238.115,40.126.238.224,40.126.245.164",
+                "possibleOutboundIpAddresses": "13.70.72.32,40.126.227.28,40.126.238.115,40.126.238.224,40.126.245.164,40.126.236.83,40.126.247.156,40.126.245.137",
+                "containerSize": 0,
+                "dailyMemoryTimeQuota": 0,
+                "suspendedTill": null,
+                "siteDisabledReason": 0,
+                "functionExecutionUnitsCache": null,
+                "maxNumberOfWorkers": null,
+                "homeStamp": "waws-prod-sy3-035",
+                "cloningInfo": null,
+                "hostingEnvironmentId": null,
+                "tags": {
+                  "hidden-related:/subscriptions/f0708dcb-74c4-41ca-8031-d4c98e01d9da/resourceGroups/TSPAdmin/providers/Microsoft.Web/serverfarms/TSPServerPlan": "empty"
+                },
+                "resourceGroup": "TSPAdmin",
+                "defaultHostName": "tspadmin.azurewebsites.net",
+                "slotSwapStatus": null,
+                "httpsOnly": true,
+                "redundancyMode": 0,
+                "inProgressOperationId": null,
+                "geoDistributions": null,
+                "privateEndpointConnections": [],
+                "buildVersion": null,
+                "targetBuildVersion": null
+              },
+              "identity": {
+                "type": "SystemAssigned",
+                "tenantId": "46c9bde5-0d21-4223-82a2-601721a9500f",
+                "principalId": "c1bddcdb-9255-41f9-9f53-ab2d09fe3ee7"
+              },
+              "apiVersion": "2015-05-01"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

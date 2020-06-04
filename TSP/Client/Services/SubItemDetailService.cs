@@ -53,5 +53,48 @@ namespace TSP.Client.Services
             return false;
 
         }
+        //
+        public async Task<string> PostImage(UploadProductLinkModel model, string token)
+        {
+            if (!_httpClient.DefaultRequestHeaders.Contains("Authorization") && !string.IsNullOrEmpty(token))
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            try
+            {
+                var content = new MultipartFormDataContent();
+                content.Headers.ContentDisposition = new System.Net.Http.Headers.ContentDispositionHeaderValue("form-data");
+
+                content.Add(new StreamContent(model.Image, (int)model.Image.Length), "File", model.ImageName);
+                content.Add(new StringContent(model.Id.ToString()), "Id");
+                var response = await _httpClient.PostAsync("api/SubItemDetail", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync();
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<AddDetailModel> Add(AddDetailModel model, string token)
+        {
+            if (!_httpClient.DefaultRequestHeaders.Contains("Authorization") && !string.IsNullOrEmpty(token))
+                _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token}");
+            var jsonData = JsonSerializer.Serialize(model);
+            var modelJson = new StringContent(jsonData, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync("api/SubItemDetail/detail", modelJson);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var temp1 = await response.Content.ReadAsStreamAsync();
+                var temp = await JsonSerializer.DeserializeAsync<AddDetailModel>(temp1);
+                return temp;
+            }
+
+            return null;
+        }
     }
 }

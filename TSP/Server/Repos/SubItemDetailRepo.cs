@@ -33,5 +33,34 @@ namespace TSP.Server.Repos
             var pagination = new PaginationModel() { Page = page, QuantityPerPage = size };
             return new Tuple<IEnumerable<M>, double>(await queryable.Where(nameExpected).Where(categoryExpected).Paginate(pagination).Select(d => d.ToModel<M>(mapper)).ToListAsync(), pagesQuantity);
         }
+        public async Task UpdateImageAsync(int id, string imagePath)
+        {
+            try
+            {
+                var entity = dBContext.Set<SubItemDetail>().First(d => d.Id == id);
+                entity.Image = imagePath;
+                await dBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public async Task<SubItemDetailModel> AddAsync(SubItemDetailModel model)
+        {
+            SubItemDetail detail = mapper.Map<SubItemDetail>(model);
+            //detail.Id = 0;
+
+            var addedEntity = dBContext.SubItemDetails.Add(detail);
+            try
+            {
+                await dBContext.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return addedEntity.Entity.ToModel<SubItemDetailModel>(mapper);
+        }
     }
 }

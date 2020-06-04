@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text;
 
 namespace TSP.Shared
@@ -19,9 +21,12 @@ namespace TSP.Shared
     }
     public enum PatchUpdateItem
     {
+        Name,
         Title,
         Paragraph,
-        Image
+        Image,
+        Order,
+        Disabled
     }
     public class PaginationModel
     {
@@ -57,5 +62,21 @@ namespace TSP.Shared
         public bool Disabled { get; set; }
         public SubMenuItemModel SubMenuItem { get; set; }
         public string IsShowClass { get; set; } = "d-none";
+        public string Checked { get; set; } = "";
+    }
+
+    public class UploadProductLinkModel
+    {
+        public int Id { get; set; }
+        public IFormFile File { get; set; }
+        public Stream Image { get; set; }
+        public string ImageName { get; set; }
+    }
+    public class AddDetailModel
+    {
+        public int Id { get; set; }// work around
+        public int MenuId { get; set; }
+        [Required]
+        public string Name { get; set; }
     }
 }

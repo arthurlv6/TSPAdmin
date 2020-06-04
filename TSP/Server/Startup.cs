@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
+using TSPServer.Services;
 
 namespace TSP.Server
 {
@@ -61,6 +62,8 @@ namespace TSP.Server
             services.AddScoped<SubSystemRepo>();
             services.AddScoped<SubMenuItemRepo>();
             services.AddScoped<SubItemDetailRepo>();
+
+            services.AddSingleton<ImageStore>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

@@ -11,14 +11,13 @@ namespace TSP.Client.Components
     {
         public string Message { get; private set; }
         public string Color { get; private set; } = "blue";
-        public MessageLevel MessageLevel { get; private set; }
         public event Action OnChange;
 
         public void SetMessage(string message="", MessageLevel messageLevel= MessageLevel.Normal)
         {
             Message = message;
-            MessageLevel = messageLevel;
-            if (MessageLevel == MessageLevel.Error)
+            //MessageLevel = messageLevel;
+            if (messageLevel == MessageLevel.Error)
             {
                 Color = "red";
                 // log the error in database;
