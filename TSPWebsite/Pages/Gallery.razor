@@ -1,0 +1,97 @@
+﻿@page "/gallery"
+@inject IJSRuntime JSRuntime
+    <div class="container my-3 w-100" >
+        @if (List == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <div class="d-flex flex-column">
+                <div class="d-flex justify-content-center">
+                    <h3 style="cursor:pointer" onclick="gallery('all')">Photo gallery</h3>
+                </div>
+                <div class="row">
+                    @{
+                        foreach (var item in List.GroupBy(d => d.Title).Select(d => d.Key))
+                        {
+                            <div class="col-md-6 col-sm-12 col-lg-2 text-center">
+                                <a class="text-info" onclick="gallery('@item.Trim().Replace(" ","")')" style="min-width:100px;cursor:pointer">@item</a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div class="container pt-3" style="min-height:500px;">
+                <div class="row">
+                    @{
+                        foreach (var item in List)
+                        {
+                            <div class="col-md-6 col-sm-12 col-lg-3 text-center @(item.Title.Trim().Replace(" ","")) all pb-3">
+                                <div class="card shadow minWidth260">
+                                    <img class="card-img-top img-fluid" data-toggle="modal" data-target="#myModal" src="@item.Image" style="cursor:pointer" alt="@item.Title">
+                                    <div class="card-body">
+                                        <p class="card-text">
+                                            @item.Paragraph
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <FootBar></FootBar>
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLabel" aria-hidden="true">
+
+        <div class="modal-dialog" role="document">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="myLabel">It is coming soon...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex h-100 justify-content-center align-items-center">
+                        <div class="d-flex flex-column">
+                            <h3 class="text-info align-self-center">Working on it</h3>
+                            <img src="images/building.png" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @code{
+        [Inject]
+        public SubItemDetailService Service { get; set; }
+        public List<SubItemDetailModel> List { get; set; }
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            List = await Service.GetSubItemDetailAsync("3");
+            List = List.Where(d => d.Title != null).ToList();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await JSRuntime.InvokeVoidAsync("blazorInterop.initializeScreenToBodyPage");
+                //await JSRuntime.InvokeVoidAsync("blazorInterop.initializeGallery");
+                await JSRuntime.InvokeVoidAsync("blazorInterop.initializeHideDropdown");
+                //
+            }
+        }
+    }

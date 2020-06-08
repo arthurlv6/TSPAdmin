@@ -14,6 +14,7 @@ namespace TSP.Server.Mapper
             CreateMap<SubSystem, SubSystemModel>().ReverseMap();
             CreateMap<SubMenuItem, SubMenuItemModel>().ReverseMap();
             CreateMap<SubItemDetail, SubItemDetailModel>().ReverseMap();
+            CreateMap<ContactUs, ContactUsModel>().ReverseMap();
         }
     }
 }

@@ -62,9 +62,16 @@ namespace TSP.Shared
         public bool Disabled { get; set; }
         public SubMenuItemModel SubMenuItem { get; set; }
         public string IsShowClass { get; set; } = "d-none";
-        public string Checked { get; set; } = "";
     }
-
+    public class ContactUsModel : BaseModel
+    {
+        [Required(ErrorMessage = "Please enter your email.")]
+        [StringLength(100)]
+        public string Email { get; set; }
+        [StringLength(5000)]
+        [Required(ErrorMessage = "Please enter your message.")]
+        public string Message { get; set; }
+    }
     public class UploadProductLinkModel
     {
         public int Id { get; set; }
@@ -78,5 +85,9 @@ namespace TSP.Shared
         public int MenuId { get; set; }
         [Required]
         public string Name { get; set; }
+    }
+    public class SampleAPIArgs
+    {
+        public string reCAPTCHAResponse { get; set; }
     }
 }

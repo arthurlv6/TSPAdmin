@@ -14,7 +14,7 @@ else
                     @onclick="Filter">
                 Search
             </button>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#myModal"+SubMenuItemId)">
                 Add
             </button>
         </div>
@@ -36,7 +36,7 @@ else
         </WithElementsTemplate>
     </GenericList>
 }
-<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLabel" aria-hidden="true">
+<div class="modal" id="@("myModal"+SubMenuItemId)" tabindex="-1" role="dialog" aria-labelledby="myLabel" aria-hidden="true">
 
     <div class="modal-dialog" role="document">
 

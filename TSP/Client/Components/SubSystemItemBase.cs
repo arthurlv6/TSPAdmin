@@ -73,11 +73,6 @@ namespace TSP.Client.Components
             try
             {
                 PageDataModel = await Service.GetSubItemDetailAsync(SubMenuItemId.ToString(), page, quantityPerPage, title, Token);
-                foreach (var item in PageDataModel.Data)
-                {
-                    if (item.Disabled)
-                        item.Checked = "Checked";
-                }
             }
             catch (AccessTokenNotAvailableException exception)
             {

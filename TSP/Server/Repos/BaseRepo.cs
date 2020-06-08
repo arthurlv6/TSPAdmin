@@ -51,6 +51,20 @@ namespace TSP.Server.Repos
                 throw ex;
             }
         }
-        
+        public async Task<Tuple<IEnumerable<M>, double>> GetPageData<T, M>(int page = 1, int size = 20, string keyword = "")
+    where M : BaseModel where T : BaseEntity
+        {
+            var queryable = dBContext.Set<T>().OrderBy(d => d.Id).AsQueryable();
+            Expression<Func<T, bool>> nameExpected = d => true;
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                nameExpected = d => d.Name.Contains(keyword);
+            }
+
+            double count = await queryable.Where(nameExpected).CountAsync();
+            double pagesQuantity = Math.Ceiling(count / size);
+            var pagination = new PaginationModel() { Page = page, QuantityPerPage = size };
+            return new Tuple<IEnumerable<M>, double>(await queryable.Where(nameExpected).Paginate(pagination).Select(d => d.ToModel<M>(mapper)).ToListAsync(), pagesQuantity);
+        }
     }
 }

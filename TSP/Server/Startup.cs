@@ -62,14 +62,17 @@ namespace TSP.Server
             services.AddScoped<SubSystemRepo>();
             services.AddScoped<SubMenuItemRepo>();
             services.AddScoped<SubItemDetailRepo>();
-
+            services.AddScoped<ContactUsRepo>();
             services.AddSingleton<ImageStore>();
+            
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.Configure<reCAPTCHAVerificationOptions>(Configuration.GetSection("reCAPTCHA"));
+            services.AddHttpClient();
             services.AddMvc().AddNewtonsoftJson();
             services.AddResponseCompression(opts =>
             {

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP.Client", "TSP\Client\TS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSP.Shared", "TSP\Shared\TSP.Shared.csproj", "{252B6015-F771-4CA2-9308-C49617CE1AF1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TSPWebsite", "TSPWebsite\TSPWebsite.csproj", "{17748852-4E7A-40E4-A7E6-FA0FD1028645}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{252B6015-F771-4CA2-9308-C49617CE1AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{252B6015-F771-4CA2-9308-C49617CE1AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{252B6015-F771-4CA2-9308-C49617CE1AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17748852-4E7A-40E4-A7E6-FA0FD1028645}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17748852-4E7A-40E4-A7E6-FA0FD1028645}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17748852-4E7A-40E4-A7E6-FA0FD1028645}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17748852-4E7A-40E4-A7E6-FA0FD1028645}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

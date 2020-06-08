@@ -40,4 +40,13 @@ namespace TSP.Shared
         public bool Disabled { get; set; }
         public SubMenuItem SubMenuItem { get; set; }
     }
+    public class ContactUs: BaseEntity
+    {
+        [Required(ErrorMessage = "Please enter your email.")]
+        [StringLength(100)]
+        public string Email { get; set; }
+        [StringLength(5000)]
+        [Required(ErrorMessage = "Please enter your message.")]
+        public string Message { get; set; }
+    }
 }

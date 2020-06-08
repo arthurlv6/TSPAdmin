@@ -21,5 +21,6 @@ namespace TSP.Server.Data
         public virtual DbSet<SubSystem> SubSystems { get; set; }
         public virtual DbSet<SubMenuItem> SubMenuItems { get; set; }
         public virtual DbSet<SubItemDetail> SubItemDetails { get; set; }
+        public virtual DbSet<ContactUs> ContactUs { get; set; }
     }
 }
