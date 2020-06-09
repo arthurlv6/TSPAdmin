@@ -17,7 +17,7 @@ namespace TSP.Server.Repos
         }
         public async Task<Tuple<IEnumerable<M>, double>> GetPageData<M>(int SubMenuItemId = 0,int page = 1, int size = 20, string keyword = "") where M : BaseModel
         {
-            var queryable = dBContext.Set<SubItemDetail>().OrderBy(d=>d.Order).AsQueryable();
+            var queryable = dBContext.Set<SubItemDetail>().Where(d=>!d.Disabled).OrderBy(d=>d.Order).AsQueryable();
             Expression<Func<SubItemDetail, bool>> nameExpected = d => true;
             if (!string.IsNullOrEmpty(keyword))
             {
