@@ -1,52 +1,55 @@
 ﻿@page "/gallery"
 @inject IJSRuntime JSRuntime
-    <div class="container my-3 w-100">
+    <div class=" w-100 h-100">
         @if (List == null)
         {
-            <p><em>Loading...</em></p>
+            <Loading></Loading>
         }
         else
         {
-            <div class="d-flex flex-column">
-                <div class="d-flex justify-content-center">
-                    <h3 style="cursor:pointer" @onclick="()=>Filter()">Photo gallery</h3>
-                </div>
-                <div class="row">
-                    @{
-                        foreach (var item in List.GroupBy(d => d.Title).Select(d => d.Key))
-                        {
-                            <div class="col-md-6 col-sm-12 col-lg-2 text-center">
-                                <a class="text-info" @onclick="()=>Filter(item)" style="min-width:100px;cursor:pointer">@item</a>
-                            </div>
+            <div class="container my-3">
+                <div class="d-flex flex-column">
+                    <div class="d-flex justify-content-center">
+                        <h3 style="cursor:pointer" @onclick="()=>Filter()">Photo gallery</h3>
+                    </div>
+                    <div class="row">
+                        @{
+                            foreach (var item in List.GroupBy(d => d.Title).Select(d => d.Key))
+                            {
+                                <div class="col-md-6 col-sm-12 col-lg-2 text-center">
+                                    <a class="text-info" @onclick="()=>Filter(item)" style="min-width:100px;cursor:pointer">@item</a>
+                                </div>
+                            }
                         }
-                    }
+                    </div>
                 </div>
-            </div>
-            <div class="container pt-3" style="min-height:500px;">
-                <div class="row">
-                    @{
-                        foreach (var item in FilteredList)
-                        {
-                            <div class="col-md-6 col-sm-12 col-lg-3 text-center pb-3">
-                                <div class="card shadow minWidth260">
-                                    <img class="card-img-top img-fluid" @onclick="()=>ModalShow(item.Id)"  src="@item.Image" style="cursor:pointer" alt="@item.Title">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            @item.Paragraph
-                                        </p>
+                <div class="container pt-3" style="min-height:500px;">
+                    <div class="row">
+                        @{
+                            foreach (var item in FilteredList)
+                            {
+                                <div class="col-md-6 col-sm-12 col-lg-3 text-center pb-3">
+                                    <div class="card shadow minWidth260">
+                                        <img class="card-img-top img-fluid" @onclick="()=>ModalShow(item.Id)" src="@item.Image" style="cursor:pointer" alt="@item.Title">
+                                        <div class="card-body">
+                                            <p class="card-text">
+                                                @item.Paragraph
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
+                            }
                         }
-                    }
+                    </div>
                 </div>
+                <GalleryShow @ref="GalleryShow" CloseEventCallback="@Dialog_OnDialogClose" List="@FilteredList"></GalleryShow>
             </div>
-            <GalleryShow @ref="GalleryShow" CloseEventCallback="@Dialog_OnDialogClose" List="@FilteredList" ></GalleryShow>
         }
+        <FootBar></FootBar>
     </div>
-    <FootBar></FootBar>
-    @code{
+
+@code{
         [Inject]
         public SubItemDetailService Service { get; set; }
         public List<SubItemDetailModel> List { get; set; }
@@ -85,4 +88,4 @@
             else
                 FilteredList=List.Where(d => d.Title == title).ToList();
         }
-    }
+}

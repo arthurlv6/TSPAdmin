@@ -1,13 +1,13 @@
 ﻿@page "/team"
-<div class="container my-3 w-100" style="min-height:500px;">
-
-    @if (List == null)
-    {
-        <p><em>Loading...</em></p>
-    }
-    else
-    {
-        int i = 0;
+    <div class="w-100 h-100">
+        @if (List == null)
+        {
+            <Loading></Loading>
+        }
+        else
+        {
+            int i = 0;
+    <div class="container my-3">
         <div class="row">
             <div class="col-12 col-lg-6 m-auto">
                 <h4>@Team1.Title</h4>
@@ -45,31 +45,34 @@
         <h4>
             Client Testimonial
         </h4>
-        foreach (var item in Testimonials.OrderBy(d=>d.Order))
+        @foreach (var item in Testimonials.OrderBy(d => d.Order))
         {
-            i++;
-            string floatDirection= "float-right";
-            string margin = "ml-3";
-            if((i % 2)==1){
-                floatDirection= "float-left";
-                margin = "mr-3";
-            }
-            <div>
-                @if (!string.IsNullOrEmpty(item?.Image))
-                {
-                    <img src="@item.Image" class="rounded @margin d-block img-thumbnail @floatDirection" width="200" height="200" alt="commercial building" />
-                }
-                else
-                {
-                    <img src="images/no-photo.png" class="rounded mx-auto d-block img-thumbnail @floatDirection" width="200" height="200" alt="commercial building" />
-                }
-                @((MarkupString)item.Paragraph)
-            </div>
-            <hr />
+        i++;
+        string floatDirection = "float-right";
+        string margin = "ml-3";
+        if ((i % 2) == 1)
+        {
+        floatDirection = "float-left";
+        margin = "mr-3";
         }
-    }
-</div>
-<FootBar></FootBar>
+        <div>
+            @if (!string.IsNullOrEmpty(item?.Image))
+            {
+                <img src="@item.Image" class="rounded @margin d-block img-thumbnail @floatDirection" width="200" height="200" alt="commercial building" />
+            }
+            else
+            {
+                <img src="images/no-photo.png" class="rounded mx-auto d-block img-thumbnail @floatDirection" width="200" height="200" alt="commercial building" />
+            }
+            @((MarkupString)item.Paragraph)
+        </div>
+        <hr />
+        }
+    </div>
+        }
+        <FootBar></FootBar>
+    </div>
+
 @inject IJSRuntime JSRuntime
 
 @code{

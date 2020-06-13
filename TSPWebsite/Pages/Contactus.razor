@@ -1,5 +1,6 @@
 ﻿@page "/contactus"
-    <div class="container my-3 w-100" style="min-height:500px;">
+    <div class="w-100 h-100">
+        <div class="container my-3">
             <div class="row">
                 <div class="col-12 col-lg-6">
                     <h4>Your message</h4>
@@ -41,9 +42,9 @@
                     <img class="img-fluid w-100" alt="TSPConstructionOffice" src="images/contactus/TSPConstructionOffice.jpg" />
                 </div>
             </div>
+        </div>
+        <FootBar></FootBar>
     </div>
-    <FootBar></FootBar>
-
 @code{ 
     [Inject]
     public IJSRuntime JSRuntime { get; set; }

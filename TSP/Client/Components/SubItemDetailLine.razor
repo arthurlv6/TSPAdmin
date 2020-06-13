@@ -42,7 +42,7 @@
         <div class="w-25 d-flex flex-column card" style="min-width:260px;">
             <img data-toggle="modal" data-target="@("#imageModal"+Item.Id)" class="card-img-top img-fluid" src="@Item.Image" style="cursor:pointer" alt="@Item.Title">
             <div class="card-body">
-                <InputFile OnChange="HandleSelection" />
+                <InputFile OnChange="HandleSelection" class="btn btn-primary" />
                 @if (selectedFiles != null)
                 {
                     foreach (var file in selectedFiles)
@@ -59,7 +59,6 @@
                                 </button>
                         }
                 }
-                <button class="btn btn-primary">Delete</button>
             </div>
         </div>
     </div>

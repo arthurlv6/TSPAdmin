@@ -23,6 +23,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using TSPServer.Services;
+using Microsoft.Azure.KeyVault;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace TSP.Server
 {
@@ -48,9 +50,23 @@ namespace TSP.Server
                     .SetPreflightMaxAge(TimeSpan.FromSeconds(300)));
             });
 
+            var keyVaultId = Configuration.GetValue<string>("KeyVaultId");
+            var clientId = Configuration.GetValue<string>("ClientId");
+            var clientSecret = Configuration.GetValue<string>("ClientSecret");
+
+            var connectionString = "";
+            KeyVaultClient keyVaultClient = new KeyVaultClient(async (authority, resource, scope) =>
+            {
+                var adCredential = new ClientCredential(clientId, clientSecret);
+                var authenticationContext = new AuthenticationContext(authority, null);
+                return (await authenticationContext.AcquireTokenAsync(resource, adCredential)).AccessToken;
+            });
+            var bundle = keyVaultClient.GetSecretAsync(keyVaultId).ConfigureAwait(false);
+            connectionString = bundle.GetAwaiter().GetResult().Value;
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    connectionString));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

@@ -13,7 +13,7 @@ namespace TSPServer.Services
 
         public ImageStore()
         {
-            var credentials = new StorageCredentials("tspwebstorage", "XnreWP+3EwxWb5NlFzZD6+brXatRkk4ObxqBsQgZEsbColMl1dCOCvckTWyXfI4hIBsySDkGjzN94p4GAGU+6g==");
+            var credentials = new StorageCredentials("tspwebstorage", "jhG8uFfNxBh/zUBxb3FWO0fLBHjgTUTwqHsjPFnQsyZFMfgNDEpBdlT5ek5OukfZeA48wc1kr1wzlsk0W6VqSA==");
             blobClient = new CloudBlobClient(new Uri(baseUri), credentials);
         }
 

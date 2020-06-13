@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authorization;
 using System;
 using TSPServer.Services;
+using Microsoft.Extensions.Configuration;
 
 namespace TSP.Server.Controllers
 {
@@ -21,11 +22,17 @@ namespace TSP.Server.Controllers
         private readonly SubItemDetailRepo repo;
         private readonly IWebHostEnvironment env;
         private readonly ImageStore imageStore;
-        public SubItemDetailController(SubItemDetailRepo _repo, IWebHostEnvironment _env, ImageStore _imageStore)
+        private readonly IConfiguration configuration;
+        public SubItemDetailController(
+            SubItemDetailRepo _repo, 
+            IWebHostEnvironment _env, 
+            ImageStore _imageStore,
+            IConfiguration _configuration)
         {
             repo = _repo;
             env = _env;
             imageStore = _imageStore;
+            configuration = _configuration;
         }
         [HttpGet]
         public async Task<IActionResult> Get(int submenuItemId = 0, int page = 1, int size = 20, string keyword = "")
@@ -75,16 +82,55 @@ namespace TSP.Server.Controllers
             string sasUrl=null;
             if (model.File != null)
             {
-                using (var stream = model.File.OpenReadStream())
+                var isAzure = configuration.GetValue<string>("IsAzure");
+                if (isAzure.ToUpper() == "YES")
                 {
-                    var imageId = await imageStore.SaveImage(stream);
-                    sasUrl = imageStore.UriFor(imageId);
-                    //return RedirectToAction("Show", new { imageId });
+                    using (var stream = model.File.OpenReadStream())
+                    {
+                        var imageId = await imageStore.SaveImage(stream);
+                        sasUrl = imageStore.UriFor(imageId);
+                    }
+                }
+                else
+                {
+                    var filePath = Path.GetTempFileName();
+                    if (model.File.Length > 0)
+                    {
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            model.File.CopyToAsync(stream).Wait();
+                        }
+                    }
+                    var objectName = Guid.NewGuid().ToString() + Path.GetExtension(model.File.FileName);
+
+                    System.IO.File.Copy(filePath, Path.Combine(env.ContentRootPath, "Uploaded", objectName));
+                    sasUrl = objectName;
                 }
             }
             await repo.UpdateImageAsync(model.Id, sasUrl);
             return Ok(sasUrl);
         }
+        [HttpGet("image/{id}")]
+        public async Task<IActionResult> Get(int id) // for normal hosting.
+        {
+            var noPhoto = PhysicalFile(env.ContentRootPath + "\\uploaded\\no-photo.png", "image/jpeg");
+            var temp = await repo.GetOneAsync<SubItemDetail, SubItemDetailModel>(id);
+            if (temp == null)
+            {
+                return noPhoto;
+            }
+            if (string.IsNullOrEmpty(temp.Image))
+            {
+                return noPhoto;
+            }
+            var file = env.ContentRootPath + "\\uploaded\\" + temp.Image;
+            if (!System.IO.File.Exists(file))
+            {
+                return noPhoto;
+            }
+            return PhysicalFile(env.ContentRootPath + "\\uploaded\\" + temp.Image, "image/jpeg");
+        }
+
         [Authorize]
         [HttpPost("detail")]
         public async Task<IActionResult> Post([FromBody] AddDetailModel model)

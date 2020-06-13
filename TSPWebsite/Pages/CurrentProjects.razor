@@ -1,47 +1,49 @@
 ﻿@page "/currentProjects"
-    <div class="container my-3 w-100" style="min-height:500px;">
+    <div class="w-100 h-100">
         @if (List == null)
         {
-            <p><em>Loading...</em></p>
+            <Loading></Loading>
         }
         else
         {
             int i = 0;
-            foreach (var item in List)
-            {
-                i++;
-                <div class="card mb-4 w-100">
-                    <div class="row no-gutters">
-                        @if ((i % 2) == 1)
-                        {
-                            <div class="col-lg-4">
-                                <img src="@item.Image" class="card-img h-100" alt="@item.Title">
-                            </div>
-                            <div class="col-lg-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">@item.Title</h5>
-                                    @((MarkupString)item.Paragraph)
+            <div class="container my-3">
+                @foreach (var item in List)
+                {
+                    i++;
+                    <div class="card mb-4 w-100">
+                        <div class="row no-gutters">
+                            @if ((i % 2) == 1)
+                            {
+                                <div class="col-lg-4">
+                                    <img src="@item.Image" class="card-img h-100" alt="@item.Title">
                                 </div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="col-lg-8 order-last order-lg-first">
-                                <div class="card-body">
-                                    <h5 class="card-title">@item.Title</h5>
-                                    @((MarkupString)item.Paragraph)
+                                <div class="col-lg-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item.Title</h5>
+                                        @((MarkupString)item.Paragraph)
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <img src="@item.Image" class="card-img" alt="@item.Title">
-                            </div>
-                        }
+                            }
+                            else
+                            {
+                                <div class="col-lg-8 order-last order-lg-first">
+                                    <div class="card-body">
+                                        <h5 class="card-title">@item.Title</h5>
+                                        @((MarkupString)item.Paragraph)
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <img src="@item.Image" class="card-img" alt="@item.Title">
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
-        </div>
-<FootBar></FootBar>
+        <FootBar></FootBar>
+    </div>
 
 @inject IJSRuntime JSRuntime
 @code{
