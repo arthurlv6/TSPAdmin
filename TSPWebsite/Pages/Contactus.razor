@@ -1,48 +1,52 @@
 ﻿@page "/contactus"
     <div class="w-100 h-100">
-        <div class="container my-3">
-            <div class="row">
-                <div class="col-12 col-lg-6">
-                    <h4>Your message</h4>
-                    <EditForm Model="@ContactUsModel" OnValidSubmit="@HandleValidSubmit">
-                        <DataAnnotationsValidator />
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" class="form-control" @bind="@ContactUsModel.Name" id="name" placeholder="Name">
-                            <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Name)" />
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" @bind="@ContactUsModel.Email" aria-describedby="emailHelp" placeholder="Enter email">
-                            <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Email)" />
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea class="form-control" id="message" @bind="@ContactUsModel.Message" rows="3"></textarea>
-                            <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Message)" />
-                        </div>
-                        <div class="form-group">
-                            <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LeupwAVAAAAAIIWwxYRjPZNNzFZbq6nEjntsyuK" OnSuccess="OnSuccess" OnExpired="OnExpired" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Send" class="btn btn-primary btn-sm" disabled="@DisablePostButton" />
-                        </div>
-                    </EditForm>
-                    <p>
-                        Privacy policy:
-                    </p>
-                    <p>
-                        We collect information from you when you fill out the contact form. When filling out the form you may be asked to enter your: name and e-mail address, you may, however, visit our site anonymously. The info we collect will be used to answer your query or reply to your comment left. We will never give out your personal information. By using our website you agree to our privacy policy.
-                    </p>
-                </div>
-                <div class="col-12 col-lg-6">
-                    <h4>Visit us</h4>
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.9041799417028!2d175.26526131540248!3d-40.63199507934067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d408cb3d39a4367%3A0xa4fee7b33701cc7d!2s16%20Sheffield%20Street%2C%20Horowhenua%2C%20Levin%205510!5e0!3m2!1sen!2snz!4v1591433903786!5m2!1sen!2snz" class="w-100" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        @if (List == null)
+        {
+            <Loading></Loading>
+        }
+        else
+        {
+            <div class="container my-3">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h4>Your message</h4>
+                        <EditForm Model="@ContactUsModel" OnValidSubmit="@HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" @bind="@ContactUsModel.Name" id="name" placeholder="Name">
+                                <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Name)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" @bind="@ContactUsModel.Email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Email)" />
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea class="form-control" id="message" @bind="@ContactUsModel.Message" rows="3"></textarea>
+                                <ValidationMessage class="offset-sm-3 col-sm-8 text-warning" For="@(() => ContactUsModel.Message)" />
+                            </div>
+                            <div class="form-group">
+                                <ReCAPTCHA @ref="reCAPTCHAComponent" SiteKey="6LeupwAVAAAAAIIWwxYRjPZNNzFZbq6nEjntsyuK" OnSuccess="OnSuccess" OnExpired="OnExpired" />
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Send" class="btn btn-primary btn-sm" disabled="@DisablePostButton" />
+                            </div>
+                        </EditForm>
+                        @((MarkupString)List.FirstOrDefault(d=>d.Name=="Policy")?.Paragraph)
+                        
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <h4>Visit us</h4>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3027.9041799417028!2d175.26526131540248!3d-40.63199507934067!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d408cb3d39a4367%3A0xa4fee7b33701cc7d!2s16%20Sheffield%20Street%2C%20Horowhenua%2C%20Levin%205510!5e0!3m2!1sen!2snz!4v1591433903786!5m2!1sen!2snz" class="w-100" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 
-                    <img class="img-fluid w-100" alt="TSPConstructionOffice" src="images/contactus/TSPConstructionOffice.jpg" />
+                        <img class="img-fluid w-100" alt="TSPConstructionOffice" src="@((MarkupString)List.FirstOrDefault(d=>d.Name=="Address")?.Image)" />
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+
         <FootBar></FootBar>
     </div>
 @code{ 
@@ -56,13 +60,21 @@
     public CaptchaService CaptchaService { get; set; }
     [Inject]
     public ContactUsService ContactUsService { get; set; }
+    [Inject]
+    public SubItemDetailService SubItemDetailService { get; set; }
 
     public ContactUsModel ContactUsModel { get; set; } = new ContactUsModel();
+    public List<SubItemDetailModel> List { get; set; }
 
     protected override void OnInitialized()
     {
         GlobalMsg.SetMessage("d-block");
     }
+    protected override async Task OnInitializedAsync()
+    {
+        List = await SubItemDetailService.GetSubItemDetailAsync("4");
+    }
+
     bool firstRender = true;
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -92,7 +104,7 @@
 
     protected async Task HandleValidSubmit()
     {
-        
+
         if (ValidReCAPTCHA)
         {
             var response = await reCAPTCHAComponent.GetResponseAsync();
