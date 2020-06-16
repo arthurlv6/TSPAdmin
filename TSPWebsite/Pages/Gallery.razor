@@ -14,10 +14,10 @@
                     </div>
                     <div class="row">
                         @{
-                            foreach (var item in List.GroupBy(d => d.Title).Select(d => d.Key))
+                            foreach (var item in GroupNames)
                             {
                                 <div class="col-md-6 col-sm-12 col-lg-2 text-center">
-                                    <a class="text-info" @onclick="()=>Filter(item)" style="min-width:100px;cursor:pointer">@item</a>
+                                    <a class="@item.LinkColor" @onclick="()=>Filter(item.Name)" style="min-width:100px;cursor:pointer">@item.Name</a>
                                 </div>
                             }
                         }
@@ -50,42 +50,59 @@
     </div>
 
 @code{
-        [Inject]
-        public SubItemDetailService Service { get; set; }
-        public List<SubItemDetailModel> List { get; set; }
-        public List<SubItemDetailModel> FilteredList { get; set; }
+    [Inject]
+    public SubItemDetailService Service { get; set; }
+    public List<SubItemDetailModel> List { get; set; }
+    public List<SubItemDetailModel> FilteredList { get; set; }
+    public List<Group> GroupNames { get; set; }
 
-        protected override async Task OnInitializedAsync()
+    public class Group
+    {
+        public string Name { get; set; }
+        public string LinkColor { get; set; }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        List = await Service.GetSubItemDetailAsync("3");
+        List = List.Where(d => d.Title != null).ToList();
+        GroupNames = List.GroupBy(d => d.Title).Select(d => new Group() { Name=d.Key, LinkColor="text-info" }).ToList();
+        FilteredList = List;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
         {
-            List = await Service.GetSubItemDetailAsync("3");
-            List = List.Where(d => d.Title != null).ToList();
+            await JSRuntime.InvokeVoidAsync("blazorInterop.initializeScreenToBodyPage");
+            //await JSRuntime.InvokeVoidAsync("blazorInterop.initializeGallery");
+            await JSRuntime.InvokeVoidAsync("blazorInterop.initializeHideDropdown");
+            //
+        }
+    }
+    protected GalleryShow GalleryShow { get; set; }
+    protected void Dialog_OnDialogClose()
+    {
+        StateHasChanged();
+    }
+    protected void ModalShow(int id)
+    {
+        GalleryShow.Show(id);
+    }
+    protected void Filter(string title="all")
+    {
+        foreach (var item in GroupNames)
+        {
+            item.LinkColor = "text-info";
+        }
+        if (title == "all")
+        {
             FilteredList = List;
         }
-
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        else
         {
-            if (firstRender)
-            {
-                await JSRuntime.InvokeVoidAsync("blazorInterop.initializeScreenToBodyPage");
-                //await JSRuntime.InvokeVoidAsync("blazorInterop.initializeGallery");
-                await JSRuntime.InvokeVoidAsync("blazorInterop.initializeHideDropdown");
-                //
-            }
+            var filteredItem = GroupNames.FirstOrDefault(d => d.Name == title);
+            filteredItem.LinkColor = "text-primary";
+            FilteredList = List.Where(d => d.Title == title).ToList();
         }
-        protected GalleryShow GalleryShow { get; set; }
-        protected void Dialog_OnDialogClose()
-        {
-            StateHasChanged();
-        }
-        protected void ModalShow(int id)
-        {
-            GalleryShow.Show(id);
-        }
-        protected void Filter(string title="all")
-        {
-            if (title == "all")
-                FilteredList = List;
-            else
-                FilteredList=List.Where(d => d.Title == title).ToList();
-        }
+    }
 }

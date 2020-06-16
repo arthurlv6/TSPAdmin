@@ -11,10 +11,10 @@ html, body {
 /* ======= section ======= */
 section {
     position: relative;
-    background-color: black;
+    background-color: transparent;
     height: 100%;
     min-height: 25rem;
-    width: 100%;
+    min-width: 100%;
     overflow: hidden;
 }
 
@@ -300,7 +300,6 @@ section {
 
             .main-nav .nav .nav-item .nav-link:active {
                 outline: none;
-                background: none;
             }
 
         .main-nav .nav .nav-item:last-child {
@@ -315,7 +314,9 @@ section {
 .nav-link {
     padding: 15px;
 }
-
+a.nav-link:hover, a.nav-link.active {
+    background-color: rgba(30, 88, 150, 0.5);
+}
 @media (max-width: 767.98px) {
     .navbar-collapse {
         border-top: none;
@@ -404,7 +405,4 @@ section {
 }
 .bg-custom-darkgreen {
     background-image: linear-gradient(rgb(198, 224, 204) 0%, rgb(40, 167, 69) 70%);
-}
-a.nav-link:hover, a.nav-link:active {
-    background-color: cornflowerblue;
 }
