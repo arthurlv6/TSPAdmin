@@ -19,7 +19,7 @@ namespace TSPWebsite
             builder.RootComponents.Add<App>("app");
 
             //builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://tspadmin.azurewebsites.net/") });
+            builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri("https://tspmanagement.azurewebsites.net/") });
             builder.Services.AddScoped<GlobalMessage>();
             builder.Services.AddTransient<SubItemDetailService>();
             builder.Services.AddTransient<CaptchaService>();

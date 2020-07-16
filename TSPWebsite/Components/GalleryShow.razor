@@ -3,16 +3,25 @@
     <div class="modal fade show d-block" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
         <div class="modal-dialog modal-xl"  role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="myLabel">View</h5>
+                <div class="modal-header p-2" style="background-color:#d6eabb">
+                    <p class="modal-title">View</p>
                     <button type="button" class="close" @onclick="Close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <div class="d-flex h-100 justify-content-center align-items-center">
-                        <div class="d-flex flex-column">
-                            <img src="@Item?.Image" class="img-fluid" alt="@Item.Title" style="min-width:300px;" />
+                        <div class="d-flex flex-column w-100">
+                            @if (!string.IsNullOrEmpty(Item.Paragraph) && Item.Paragraph.ToLower().Contains("iframe"))
+                            {
+                                <div>
+                                    @((MarkupString)Item.Paragraph)
+                                </div>
+                            }
+                            else
+                            {
+                                <img src="@Item?.Image" class="img-fluid" alt="@Item.Title" style="min-width:300px;" />
+                            }
                             <div class="flex-wrap mt-3">
                                 @foreach (var item in List)
                                 {
@@ -22,8 +31,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @onclick="Close">Close</button>
+                <div class="modal-footer p-1">
+                    <button type="button" class="btn btn-sm btn-secondary" @onclick="Close">Close</button>
                 </div>
             </div>
         </div>
@@ -43,6 +52,7 @@
     {
         Id = id;
         Item = List.First(d => d.Id == id);
+        Item.Paragraph = GetModifiedParagraph(Item.Paragraph);
         ShowDialog = true;
     }
     public void Close()
@@ -53,5 +63,21 @@
     {
         Id = id;
         Item = List.FirstOrDefault(d => d.Id == Id);
+        Item.Paragraph = GetModifiedParagraph(Item.Paragraph);
+    }
+    private string GetModifiedParagraph(string str)
+    {
+        if (string.IsNullOrEmpty(str))
+            return "";
+        string paragraph = "";
+        if (str.ToLower().Contains("iframe"))
+        {
+            int begin = Item.Paragraph.IndexOf("<iframe");
+            int end = Item.Paragraph.IndexOf("</iframe>");
+            var originalString = Item.Paragraph.Substring(begin, end - begin) + "</iframe>";
+            originalString = originalString.Replace("note-video-clip", "embed-responsive-item");
+            paragraph = "<div class='embed-responsive embed-responsive-16by9'>" + originalString + "</div>";
+        }
+        return paragraph;
     }
 }

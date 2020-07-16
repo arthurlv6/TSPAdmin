@@ -9,11 +9,11 @@ namespace TSPServer.Services
     public class ImageStore
     {
         CloudBlobClient blobClient;
-        string baseUri = "https://tspwebstorage.blob.core.windows.net/";
+        string baseUri = "https://tspserverstorage.blob.core.windows.net/";
 
         public ImageStore()
         {
-            var credentials = new StorageCredentials("tspwebstorage", "jhG8uFfNxBh/zUBxb3FWO0fLBHjgTUTwqHsjPFnQsyZFMfgNDEpBdlT5ek5OukfZeA48wc1kr1wzlsk0W6VqSA==");
+            var credentials = new StorageCredentials("tspserverstorage", "LIYmtBcUlNt9bUHeZmBQ7/LTtRgSJsp7+u76gKSr7wYmDdyIBu6oCBLhRaxtlcegXy1EUDgjuQU63Ze5gIoi7w==");
             blobClient = new CloudBlobClient(new Uri(baseUri), credentials);
         }
 

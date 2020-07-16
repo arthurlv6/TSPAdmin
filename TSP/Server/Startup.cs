@@ -63,7 +63,8 @@ namespace TSP.Server
             });
             var bundle = keyVaultClient.GetSecretAsync(keyVaultId).ConfigureAwait(false);
             connectionString = bundle.GetAwaiter().GetResult().Value;
-
+            //connectionString = "Server=localhost;Database=tspfromazure;User Id=sa; Password=yourStrong(!)Password";
+            //
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     connectionString));

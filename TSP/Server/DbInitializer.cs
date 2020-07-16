@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TSP.Server.Data;
@@ -193,109 +195,18 @@ namespace TSP.Server
                     context.SubMenuItems.Add(greenNews);
                     context.SubMenuItems.Add(greenUs);
                 }
-                if (!context.SubItemDetails.Any())
-                {
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Modular, Energy Efficient, Transportable Homes",
-                        Paragraph = "Our eco homes are built with premium quality, sustainable products and designed for maximum energy efficiency. They are modern, light and efficient, making the best use of available space to provide New Zealand families with warmer, drier, healthier homes with good natural light.",
-                        Image = "",
-                        SubMenuItem = greenHome,
-                        Order = 1
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Take a virtual tour through our Show Home",
-                        Paragraph = "",
-                        Image = "https://i.ytimg.com/vi/orXdgsDZ-TI/hqdefault.jpg",
-                        SubMenuItem = greenHome,
-                        Order = 2
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Architectural Design at the Core",
-                        Paragraph = "With clever, architectural design at the core, your passive home costs less to run. Careful consideration has gone into the placement of windows and insulation to reduce the amount of energy required to heat your home.",
-                        Image = "",
-                        SubMenuItem = greenHome,
-                        Order = 3
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Sustainable Living",
-                        Paragraph = "We use FSC rated sustainably farmed timbers, LED lighting, low VOC paints and include the latest eco-friendly options wherever possible, better for the environment. Designed with cleaner, more breathable air, it’s also better for you and your family.",
-                        Image = "",
-                        SubMenuItem = greenHome,
-                        Order = 4
-                    });
-
-                    // greenSpecification
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Foundations",
-                        Paragraph = "Standard",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 1
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Exterior",
-                        Paragraph = "Wall cladding",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 2
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Services",
-                        Paragraph = "Todd, from TSP Construction, built our beach house.  He workedclosely with us and our architect during the building process. Todd and his buildingcrew were hardworking and exacting in their detail and finish, resulting in a high end architectural house we look forward to spending many years in.",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 3
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Framing",
-                        Paragraph = "Two years on we are still delighted with our house, and it has certainly met the lifestyle needs we identified when it was first designed for us.",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 4
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Interior and finish",
-                        Paragraph = "Left to right : Brendon, Jimmy, Mark, Dane, unknown, Jay, James, Dennis, Maika, John, Matt, Alinka, Mike & Raz.",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 5
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Suggested site landscaping",
-                        Paragraph = "From left to right; Todd (TSP Construction owner), Ronan (BCITO Area Manager), Michael (absent), David, Manu and Mark(Training Accessor).",
-                        Image = "",
-                        SubMenuItem = greenSpecification,
-                        Order = 6
-                    });
-                    //greenFyq
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "What materials are used to make it a Eco home?",
-                        Image = "",
-                        Paragraph = "",
-                        SubMenuItem = greenFyq,
-                        Order = 1
-                    });
-                    context.SubItemDetails.Add(new SubItemDetail()
-                    {
-                        Title = "Can the floor plans be changed?",
-                        Image = "",
-                        Paragraph = "All of our standard floor plans can be changed and adapted to suit your exact requirements and site constraints. We also offer an expert Eco focused architectural design-build service.",
-                        SubMenuItem = greenFyq,
-                        Order = 2
-                    });
-                }
+                
                 #endregion
+            }
+            if (!context.SubItemDetails.Any())
+            {
+                var root = Directory.GetCurrentDirectory();
+                using (StreamReader r = File.OpenText(@$"{root}\\Data\\details.json"))
+                {
+                    string json = r.ReadToEnd();
+                    List<SubItemDetail> list = JsonConvert.DeserializeObject<List<SubItemDetail>>(json);
+                    context.SubItemDetails.AddRange(list);
+                }
             }
             context.SaveChanges();
         }

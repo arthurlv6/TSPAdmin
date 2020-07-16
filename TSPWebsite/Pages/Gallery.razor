@@ -25,22 +25,17 @@
                 </div>
                 <div class="container pt-3" style="min-height:500px;">
                     <div class="row">
-                        @{
-                            foreach (var item in FilteredList)
+                            @foreach (var item in FilteredList)
                             {
                                 <div class="col-md-6 col-sm-12 col-lg-3 text-center pb-3">
                                     <div class="card shadow minWidth260 animate__animated animate__fadeInUp">
-                                        <img class="card-img-top img-fluid " @onclick="()=>ModalShow(item.Id)" src="@item.Image" style="cursor:pointer" alt="@item.Title">
-                                        <div class="card-body">
-                                            <p class="card-text">
-                                                @item.Paragraph
-                                            </p>
+                                        <div class="card-body p-1">
+                                            <img class="card-img-top img-fluid " @onclick="()=>ModalShow(item.Id)" src="@item.Image" style="cursor:pointer" alt="@item.Title">
+                                            
                                         </div>
                                     </div>
                                 </div>
-
                             }
-                        }
                     </div>
                 </div>
                 <GalleryShow @ref="GalleryShow" CloseEventCallback="@Dialog_OnDialogClose" List="@FilteredList"></GalleryShow>
