@@ -6,7 +6,7 @@
       "value": null
     },
     "administratorLogin": {
-      "value": null
+      "value": "serverAdmin"
     },
     "administratorLoginPassword": {
       "value": ""

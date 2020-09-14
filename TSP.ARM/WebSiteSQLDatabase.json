@@ -178,6 +178,20 @@
               "type": "SQLServer"
             }
           }
+        },
+        {
+          "name": "clientId",
+          "type": "config",
+          "apiVersion": "2015-08-01",
+          "dependsOn": [
+            "[resourceId('Microsoft.Web/sites', parameters('webSiteName'))]"
+          ],
+          "tags": {
+            "displayName": "clientId"
+          },
+          "properties": {
+            "clientId": "value1"
+          }
         }
       ]
     },
