@@ -8,6 +8,9 @@
     "administratorLogin": {
       "value": null
     },
+    "administratorLoginPassword": {
+      "value": ""
+    },
     "databaseName": {
       "value": null
     },
