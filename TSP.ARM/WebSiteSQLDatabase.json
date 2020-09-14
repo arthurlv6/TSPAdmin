@@ -178,7 +178,9 @@
           },
           "properties": {
             "ConnectionString": "value1",
-            "IsAzure": "value2"
+            "IsAzure": "value2",
+            "ClientId": "value3",
+            "ClientSecret": "value4"
           }
         }
       ]
