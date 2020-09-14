@@ -62,9 +62,10 @@ namespace TSP.Server
                 return (await authenticationContext.AcquireTokenAsync(resource, adCredential)).AccessToken;
             });
             var bundle = keyVaultClient.GetSecretAsync(keyVaultId).ConfigureAwait(false);
-            connectionString = bundle.GetAwaiter().GetResult().Value;
-            //connectionString = "Server=localhost;Database=tspfromazure;User Id=sa; Password=yourStrong(!)Password";
-            //
+            var password = bundle.GetAwaiter().GetResult().Value;
+            //connectionString = "Data Source=localhost;Initial Catalog=tspdatabase;Integrated Security=True";
+
+            connectionString = Configuration.GetValue<string>("ConnectionString").Replace("password",password);
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     connectionString));
