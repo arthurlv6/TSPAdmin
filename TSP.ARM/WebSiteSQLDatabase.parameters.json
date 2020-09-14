@@ -3,22 +3,25 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "hostingPlanName": {
-      "value": null
+      "value": "dev-tsp-plan"
     },
     "administratorLogin": {
       "value": "serverAdmin"
     },
     "administratorLoginPassword": {
-      "value": ""
+      "value": "Server!1"
     },
     "databaseName": {
-      "value": null
+      "value": "tsp-dev-database"
     },
     "webSiteName": {
-      "value": null
+      "value": "tsp-dev"
     },
     "sqlserverName": {
-      "value": null
+      "value": "tspdevsqlserver"
+    },
+    "skuName": {
+      "value": "S1"
     }
   }
 }
