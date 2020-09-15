@@ -177,8 +177,8 @@
           },
           "properties": {
             "IsAzure": "value2",
-            "ClientId": "value3",
-            "ClientSecret": "value4",
+            "ClientId": "parameters('ClientId')",
+            "ClientSecret": "parameters('ClientSecret')",
             "DefaultConnection": {
               "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
               "type": "SQLServer"
