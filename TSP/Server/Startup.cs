@@ -49,7 +49,7 @@ namespace TSP.Server
                     .AllowAnyHeader()
                     .SetPreflightMaxAge(TimeSpan.FromSeconds(300)));
             });
-            var connectionString = Configuration.GetValue<string>("ConnectionString");
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     connectionString));
