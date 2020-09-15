@@ -165,7 +165,6 @@
         "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('hostingPlanName'))]"
       },
       "resources": [
-
         {
           "name": "appsettings",
           "type": "config",
@@ -177,10 +176,13 @@
             "displayName": "Settings"
           },
           "properties": {
-            "ConnectionString": "value1",
             "IsAzure": "value2",
             "ClientId": "value3",
-            "ClientSecret": "value4"
+            "ClientSecret": "value4",
+            "DefaultConnection": {
+              "value": "[concat('Data Source=tcp:', reference(resourceId('Microsoft.Sql/servers/', parameters('sqlserverName'))).fullyQualifiedDomainName, ',1433;Initial Catalog=', parameters('databaseName'), ';User Id=', parameters('administratorLogin'), '@', parameters('sqlserverName'), ';Password=', parameters('administratorLoginPassword'), ';')]",
+              "type": "SQLServer"
+            }
           }
         }
       ]
