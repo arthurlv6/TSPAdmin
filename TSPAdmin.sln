@@ -15,6 +15,8 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "TSP.Database", "TSP.Databas
 EndProject
 Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "TSP.ARM", "TSP.ARM\TSP.ARM.deployproj", "{2ED5DE89-DCE3-458D-B4BA-EA0727FD1587}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSP.Blazor", "TSP.Blazor\TSP.Blazor.csproj", "{F2D06680-581E-4C6D-8C4D-62969B204822}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{2ED5DE89-DCE3-458D-B4BA-EA0727FD1587}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2ED5DE89-DCE3-458D-B4BA-EA0727FD1587}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2ED5DE89-DCE3-458D-B4BA-EA0727FD1587}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2D06680-581E-4C6D-8C4D-62969B204822}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2D06680-581E-4C6D-8C4D-62969B204822}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2D06680-581E-4C6D-8C4D-62969B204822}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2D06680-581E-4C6D-8C4D-62969B204822}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
